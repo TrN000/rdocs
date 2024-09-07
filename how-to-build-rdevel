@@ -1,0 +1,55 @@
+  # How to build R devel
+
+  ## history of first time doing it
+
+  883  cd work/r-env/
+  ...
+  892  svn log -v -r HEAD:\{`date +%Y-%m-%d -d'7 days ago'`\} https://svn.r-project.org/R
+  893  svn checkout https://svn.r-project.org/R/trunk R-devel
+  894  cd R-devel/
+  895  svn info
+  896  svn up
+  897  cd ..
+  898  mkdir Rdev-inst
+  899  cd Rdev-inst
+  900  ../R-devel/configure 
+  ...
+  904  sudo dnf install readline-devel
+  905  ../R-devel/configure 
+  ...
+  907  sudo dnf install libX11-devel
+  908  sudo dnf install R-core-devel
+  909  ../R-devel/configure 
+  ...
+  911  sudo dnf install libXt-devel
+  912  ../R-devel/configure 
+  913  cd ../R-devel/
+  914  tools/rsync-recommended 
+  915  pushd
+  916  cd ../Rdev-inst/
+  917  ../R-devel/configure 
+  918  make
+  919  bin/R
+  920  ls
+  921  ls bin/
+  922  cat bin/R
+
+## refined process
+
+svn checkout https://svn.r-project.org/R/trunk R-devel
+cd R-devel/
+svn info
+svn up
+cd ..
+mkdir Rdev-inst
+cd Rdev-inst
+tools/rsync-recommended 
+cd Rdev-inst
+../R-devel/configure 
+make
+
+
+## get deps for R CMD check to build my norMmix package
+
+install.packages(c("mvtnorm", "mclust", "sfsmisc", "nor1mix", "testthat", "knitr", "rmarkdown", "compositions", "mixtools"))
+
